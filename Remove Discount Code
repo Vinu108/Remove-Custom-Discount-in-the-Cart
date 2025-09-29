@@ -1,0 +1,30 @@
+async function removeDiscountRahul10() {
+  try {
+    // Get current cart
+    const cart = await fetch('/cart.js').then(res => res.json());
+
+    // Keep all codes except RAHUL10
+    const remainingCodes = cart.discount_codes
+      .map(d => d.code)
+      .filter(code => code.toUpperCase() !== 'RAHUL20');
+
+    // Update cart with remaining discounts
+    await fetch('/cart/update.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        discount: remainingCodes.join(','),
+      }),
+    });
+
+    // Reload cart page/drawer
+    location.reload();
+  } catch (err) {
+    console.error('❌ Error removing RAHUL10:', err);
+  }
+}
+
+// 👉 Call this function when you want to remove RAHUL10
+removeDiscountRahul10();
