@@ -1,0 +1,19 @@
+const formData = {
+  discount: "Rahul10",
+};
+
+fetch(window.Shopify.routes.root + "cart/update.js", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(formData),
+})
+  .then(res => res.json())
+  .then((data) => {
+    console.log("Discount removed:", data);
+main();
+redirectToPage();
+  
+  })
+  .catch((error) => console.error("Error:", error));
